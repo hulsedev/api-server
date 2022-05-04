@@ -18,6 +18,7 @@ Authlib
 channels
 channels-redis
 daphne
+django-on-heroku
 django-allauth
 django-eventstream
 django-cors-headers

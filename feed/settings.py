@@ -186,3 +186,8 @@ EVENTSTREAM_CHANNELMANAGER_CLASS = "feedapp.channelmanager.ChannelAuthManager"
 
 # whitenoise related stuff
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# handle settings for django
+import django_on_heroku
+
+django_on_heroku.settings(locals())
