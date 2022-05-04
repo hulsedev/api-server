@@ -98,6 +98,15 @@ def logout(request):
 
 
 def serialize_clusters(clusters, user):
+    """Dump user clusters to a dict and return response.
+
+    :param clusters: Clusters of requesting users.
+    :type clusters: List
+    :param user: User to serialize clusters for.
+    :type user: django.auth.models.User
+    :return: HTTP response with attached json dumped clusters.
+    :rtype: rest_framework.response.Response
+    """
     serialized_clusters = []
     for cluster in clusters:
         # skip clusters that were deleted
