@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY", "heheejeeje")
-HULSE_LANDING_URL = os.environ.get("HULSE_LANDING_URL", "https://hulse.app")
+HULSE_LANDING_URL = os.environ.get("HULSE_LANDING_URL", "https://hulse.app/")
 HULSE_DASHBOARD_URL = os.environ.get(
-    "HULSE_DASHBOARD_URL", "https://dashboard.hulse.app"
+    "HULSE_DASHBOARD_URL", "https://dashboard.hulse.app/"
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
