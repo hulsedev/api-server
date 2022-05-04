@@ -13,6 +13,10 @@ import os
 from pathlib import Path
 from corsheaders.defaults import default_headers as default_cors_headers
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
@@ -21,10 +25,14 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "heheejeeje"
+SECRET_KEY = os.environ.get("SECRET_KEY", "heheejeeje")
+HULSE_LANDING_URL = os.environ.get("HULSE_LANDING_URL", "https://hulse.app")
+HULSE_DASHBOARD_URL = os.environ.get(
+    "HULSE_DASHBOARD_URL", "https://dashboard.hulse.app"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "true").lower() == "true"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -97,7 +105,7 @@ WSGI_APPLICATION = "feed.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+# NOTE: automatically forwarded to postgresql in prod
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -150,12 +158,9 @@ AUTH_USER_MODEL = "feedapp.User"
 
 # Auth0 settings
 SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
-
-SOCIAL_AUTH_AUTH0_DOMAIN = "dev-le9leu4t.us.auth0.com"
-SOCIAL_AUTH_AUTH0_KEY = "pO7VIcgQe7kyrMZXyN8vOsLOoqgokBgR"
-SOCIAL_AUTH_AUTH0_SECRET = (
-    "YkWaxB6v3-snnGQfkH5Iuxx8R2sjk8IZDUATcyPfp4AX3_65uTMUqsX9qiMafkLg"
-)
+SOCIAL_AUTH_AUTH0_DOMAIN = os.environ.get("SOCIAL_AUTH_AUTH0_DOMAIN")
+SOCIAL_AUTH_AUTH0_KEY = os.environ.get("SOCIAL_AUTH_AUTH0_KEY")
+SOCIAL_AUTH_AUTH0_SECRET = os.environ.get("SOCIAL_AUTH_AUTH0_SECRET")
 
 SOCIAL_AUTH_AUTH0_SCOPE = ["openid", "profile", "email"]
 

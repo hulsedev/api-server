@@ -44,7 +44,7 @@ def index(request):
         token, created = Token.objects.get_or_create(user=request.user)
         # TODO: add prod url parameters
         return redirect(
-            f"http://localhost:3000/?"
+            f"{settings.HULSE_DASHBOARD_URL}?"
             + urlencode(
                 {
                     "authToken": token.key,
@@ -62,7 +62,7 @@ def index(request):
             ),
         )
 
-    return redirect("https://hulse.app/")
+    return redirect(settings.HULSE_LANDING_URL)
 
 
 def callback(request):
