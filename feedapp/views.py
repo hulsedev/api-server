@@ -1,21 +1,17 @@
-import uuid
+import functools
 from datetime import datetime
 from urllib.parse import quote_plus, urlencode
 
+import django_eventstream as dje
 from authlib.integrations.django_client import OAuth
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.contrib.auth import logout as django_logout
-from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import AnonymousUser
-from django.db.models import Count
-from django.shortcuts import redirect, render
+from django.db.models import Q
+from django.shortcuts import redirect
 from django.urls import reverse
-import django_eventstream as dje
-from rest_framework import serializers, status
+from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.decorators import (
     api_view,
     authentication_classes,
@@ -23,10 +19,8 @@ from rest_framework.decorators import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.db.models import Q
-import functools
 
-from .models import Cluster, User, QueryRecord
+from .models import Cluster, QueryRecord, User
 
 # current way to store query results and statuses
 QUERY_STORE = {}

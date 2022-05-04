@@ -4,7 +4,7 @@ from loguru import logger
 from django_eventstream.channelmanager import DefaultChannelManager
 from rest_framework.authtoken.models import Token
 
-from feedapp import models, utils, views
+from feedapp import models, views
 
 
 class ChannelAuthManager(DefaultChannelManager):

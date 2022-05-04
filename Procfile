@@ -1,1 +1,1 @@
-web: gunicorn feed.feed.wsgi
+web: gunicorn feed.wsgi

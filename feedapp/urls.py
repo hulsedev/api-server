@@ -1,7 +1,6 @@
-import django_eventstream
-from django.urls import include, path
+from django.urls import path
 
-from feedapp import views, events
+from feedapp import events, views
 
 urlpatterns = [
     path("", views.index, name="index"),

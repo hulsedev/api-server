@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import django_eventstream as dje
 from django.conf import settings
 from django.http import HttpResponseBadRequest
