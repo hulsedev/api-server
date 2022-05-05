@@ -42,3 +42,9 @@ Finally, run the application:
 ```bash
 python manage.py runserver
 ```
+
+Running the web process:
+```Procfile
+web: gunicorn feed.wsgi
+
+```
