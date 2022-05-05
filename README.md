@@ -46,5 +46,5 @@ python manage.py runserver
 Running the web process:
 ```Procfile
 web: gunicorn feed.wsgi
-
+web: daphne feed.asgi:application
 ```
