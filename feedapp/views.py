@@ -43,7 +43,6 @@ def index(request):
     print("following up and getting here", request.user, request.session.get("user"))
     if request.user and not isinstance(request.user, AnonymousUser):
         token, created = Token.objects.get_or_create(user=request.user)
-        # TODO: add prod url parameters
         return redirect(
             f"{settings.HULSE_DASHBOARD_URL}?"
             + urlencode(
@@ -69,7 +68,7 @@ def index(request):
 def callback(request):
     # if already registered the user and returning from alternative auth0 login
     print("reached a callback\n\n")
-    if request.session.get("user"):
+    if request.session.get("user") and not isinstance(request.user, AnonymousUser):
         print(request.user, request.session.get("user"))
         return redirect(request.build_absolute_uri(reverse("index")))
 
