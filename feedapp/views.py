@@ -75,21 +75,25 @@ def callback(request):
     )
     if request.session.get("user") and not isinstance(request.user, AnonymousUser):
         return redirect(request.build_absolute_uri(reverse("index")))
-    elif not request.session.get("user") and not isinstance(
-        request.user, AnonymousUser
-    ):
-        # retrieve authentication token from Auth0, loading the user info
-        token = oauth.auth0.authorize_access_token(request)
-        request.session["user"] = token
-        return redirect(request.build_absolute_uri("/login/auth0"))
-    else:
-        print(
-            "CREDENTIALS",
-            settings.SOCIAL_AUTH_AUTH0_KEY,
-            settings.SOCIAL_AUTH_AUTH0_SECRET,
-            settings.SOCIAL_AUTH_AUTH0_DOMAIN,
-        )
-        return redirect(request.build_absolute_uri(reverse("index")))
+    # elif not request.session.get("user") and not isinstance(
+    #    request.user, AnonymousUser
+    # ):
+    #    # retrieve authentication token from Auth0, loading the user info
+    #    token = oauth.auth0.authorize_access_token(request)
+    #    request.session["user"] = token
+    #    return redirect(request.build_absolute_uri("/login/auth0"))
+    # else:
+    #    print(
+    #        "CREDENTIALS",
+    #        settings.SOCIAL_AUTH_AUTH0_KEY,
+    #        settings.SOCIAL_AUTH_AUTH0_SECRET,
+    #        settings.SOCIAL_AUTH_AUTH0_DOMAIN,
+    #    )
+    #    return redirect(request.build_absolute_uri(reverse("index")))
+
+    token = oauth.auth0.authorize_access_token(request)
+    request.session["user"] = token
+    return redirect(request.build_absolute_uri("/login/auth0"))
 
 
 def login(request):
