@@ -47,4 +47,6 @@ Running the web process:
 ```Procfile
 web: gunicorn feed.wsgi
 web: daphne feed.asgi:application
+web: daphne feed.asgi:application --port $PORT --bind 0.0.0.0 -v2
+
 ```
