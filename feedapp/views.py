@@ -81,11 +81,11 @@ def login(request):
     """Login through Auth0."""
     print(
         "CALLBACK LOGIN",
-        request.build_absolute_uri(reverse("callback")).replace("https://", "https://"),
+        request.build_absolute_uri(reverse("callback")).replace("http://", "https://"),
     )
     return oauth.auth0.authorize_redirect(
         request,
-        request.build_absolute_uri(reverse("callback")).replace("https://", "https://"),
+        request.build_absolute_uri(reverse("callback")).replace("http://", "https://"),
     )
 
 
