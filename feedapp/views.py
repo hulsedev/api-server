@@ -77,6 +77,7 @@ def callback(request):
 
 def login(request):
     """Login through Auth0."""
+    print(request.build_absolute_uri(reverse("callback")))
     return oauth.auth0.authorize_redirect(
         request, request.build_absolute_uri(reverse("callback"))
     )
