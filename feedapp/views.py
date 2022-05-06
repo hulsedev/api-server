@@ -40,6 +40,7 @@ oauth.register(
 
 
 def index(request):
+    print("following up and getting here", request.session.get("user"))
     if request.user and not isinstance(request.user, AnonymousUser):
         token, created = Token.objects.get_or_create(user=request.user)
         # TODO: add prod url parameters
