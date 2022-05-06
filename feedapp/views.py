@@ -69,6 +69,7 @@ def callback(request):
     # if already registered the user and returning from alternative auth0 login
     print("reached a callback\n\n")
     if request.session.get("user"):
+        print(request.session.get("user"))
         return redirect(request.build_absolute_uri(reverse("index")))
 
     token = oauth.auth0.authorize_access_token(request)
