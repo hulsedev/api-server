@@ -192,7 +192,12 @@ EVENTSTREAM_CHANNELMANAGER_CLASS = "feedapp.channelmanager.ChannelAuthManager"
 # whitenoise related stuff
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-CSRF_TRUSTED_ORIGINS = ["localhost:8000", "https://hulse-api.herokuapp.com/"]
+CSRF_TRUSTED_ORIGINS = [
+    "localhost:8000",
+    "https://hulse-api.herokuapp.com/",
+    "https://hulse-api.herokuapp.com",
+]
+
 # handle heroku
 import django_on_heroku
 
