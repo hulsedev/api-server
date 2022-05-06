@@ -19,7 +19,6 @@ class ChannelAuthManager(DefaultChannelManager):
             return False
 
         # check if user is valid
-        print(token_str)
         user = Token.objects.get(key=token_str).user
         if not user:
             return False
