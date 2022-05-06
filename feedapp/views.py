@@ -67,25 +67,36 @@ def index(request):
 
 def callback(request):
     # if already registered the user and returning from alternative auth0 login
-    print("reached a callback\n\n")
+    print(
+        "\n\n\nREACHED CALLBACK FROM LOGIN (1ST)",
+        request.user,
+        request.session.get("user"),
+        "\n\n\n",
+    )
     if request.session.get("user") and not isinstance(request.user, AnonymousUser):
-        print(request.user, request.session.get("user"))
         return redirect(request.build_absolute_uri(reverse("index")))
-
-    token = oauth.auth0.authorize_access_token(request)
-    request.session["user"] = token
-    return redirect(request.build_absolute_uri("/login/auth0"))
+    elif not request.session.get("user") and not isinstance(
+        request.user, AnonymousUser
+    ):
+        # retrieve authentication token from Auth0, loading the user info
+        token = oauth.auth0.authorize_access_token(request)
+        request.session["user"] = token
+        return redirect(request.build_absolute_uri("/login/auth0"))
+    else:
+        print(
+            "CREDENTIALS",
+            settings.SOCIAL_AUTH_AUTH0_KEY,
+            settings.SOCIAL_AUTH_AUTH0_SECRET,
+            settings.SOCIAL_AUTH_AUTH0_DOMAIN,
+        )
+        return redirect(request.build_absolute_uri(reverse("index")))
 
 
 def login(request):
     """Login through Auth0."""
-    print(
-        "CALLBACK LOGIN",
-        request.build_absolute_uri(reverse("callback")).replace("http://", "https://"),
-    )
+
     return oauth.auth0.authorize_redirect(
-        request,
-        request.build_absolute_uri(reverse("callback")).replace("http://", "https://"),
+        request, request.build_absolute_uri(reverse("callback"))
     )
 
 
