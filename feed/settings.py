@@ -30,6 +30,7 @@ HULSE_LANDING_URL = os.environ.get("HULSE_LANDING_URL", "https://hulse.app/")
 HULSE_DASHBOARD_URL = os.environ.get(
     "HULSE_DASHBOARD_URL", "https://dashboard.hulse.app/"
 )
+HULSE_DESKTOP_URL = os.environ.get("HULSE_DESKTOP_URL", "http://localhost:4240/")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "true").lower() == "true"
@@ -193,7 +194,7 @@ EVENTSTREAM_CHANNELMANAGER_CLASS = "feedapp.channelmanager.ChannelAuthManager"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # CSRF_TRUSTED_ORIGINS = [
-#    "localhost:8000",
+#    "http://localhost:8000",
 #    "https://hulse-api.herokuapp.com/",
 #    "https://hulse-api.herokuapp.com",
 # ]

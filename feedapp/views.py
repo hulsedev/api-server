@@ -40,7 +40,6 @@ oauth.register(
 
 
 def index(request):
-    print("following up and getting here", request.user, request.session.get("user"))
     if request.user and not isinstance(request.user, AnonymousUser):
         token, created = Token.objects.get_or_create(user=request.user)
         return redirect(
@@ -67,29 +66,28 @@ def index(request):
 
 def callback(request):
     # if already registered the user and returning from alternative auth0 login
-    print(
-        "\n\n\nREACHED CALLBACK FROM LOGIN (1ST)",
-        request.user,
-        request.session.get("user"),
-        "\n\n\n",
-    )
-    if request.session.get("user") and not isinstance(request.user, AnonymousUser):
+    if (
+        request.session.get("user")
+        and not isinstance(request.user, AnonymousUser)
+        and not request.session.get("is_desktop")
+    ):
         return redirect(request.build_absolute_uri(reverse("index")))
-    # elif not request.session.get("user") and not isinstance(
-    #    request.user, AnonymousUser
-    # ):
-    #    # retrieve authentication token from Auth0, loading the user info
-    #    token = oauth.auth0.authorize_access_token(request)
-    #    request.session["user"] = token
-    #    return redirect(request.build_absolute_uri("/login/auth0"))
-    # else:
-    #    print(
-    #        "CREDENTIALS",
-    #        settings.SOCIAL_AUTH_AUTH0_KEY,
-    #        settings.SOCIAL_AUTH_AUTH0_SECRET,
-    #        settings.SOCIAL_AUTH_AUTH0_DOMAIN,
-    #    )
-    #    return redirect(request.build_absolute_uri(reverse("index")))
+    elif (
+        request.session.get("user")
+        and not isinstance(request.user, AnonymousUser)
+        and request.session.get("is_desktop")
+    ):
+        # redirect to local server
+        token, created = Token.objects.get_or_create(user=request.user)
+        return redirect(
+            f"{settings.HULSE_DESKTOP_URL}?"
+            + urlencode(
+                {
+                    "authToken": token.key,
+                },
+                quote_via=quote_plus,
+            ),
+        )
 
     token = oauth.auth0.authorize_access_token(request)
     request.session["user"] = token
@@ -98,6 +96,8 @@ def callback(request):
 
 def login(request):
     """Login through Auth0."""
+    # register whether the app comes from the web or desktop
+    request.session["is_desktop"] = request.GET.get("source") == "desktop"
 
     return oauth.auth0.authorize_redirect(
         request, request.build_absolute_uri(reverse("callback"))
