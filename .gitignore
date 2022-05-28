@@ -1,7 +1,9 @@
 # custom ignores
 env/
 staticfiles/
-.env
+.env*
+.tmp*
+.*.env*
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,django,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django,macos
@@ -12,7 +14,7 @@ staticfiles/
 *.pyc
 __pycache__/
 local_settings.py
-db.sqlite3
+*db.sqlite3
 db.sqlite3-journal
 media
 

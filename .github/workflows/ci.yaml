@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "master"
+
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  ci-run:
+    name: Run CI
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    runs-on: "ubuntu-latest"
+
+    env:
+      CI: 1
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Lint
+        run: |
+          pip install black>=20.8b1
+          black --check .
+
+      - name: Install Dependencies
+        shell: bash -l {0}
+        run: |
+          pip install requirements.txt
+
+      - name: Run tests
+        shell: bash -l {0}
+        run: |
+          bash scripts/run-tests.sh

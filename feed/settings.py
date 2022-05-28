@@ -107,10 +107,11 @@ WSGI_APPLICATION = "feed.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 # NOTE: automatically forwarded to postgresql in prod
+DB_NAME = os.environ.get("DB_NAME", "db.sqlite3")
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": BASE_DIR / DB_NAME,
     }
 }
 
