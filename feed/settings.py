@@ -41,8 +41,6 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    "channels",
-    "django_eventstream",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -79,7 +77,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_grip.GripMiddleware",
 ]
 
 
@@ -185,11 +182,6 @@ SUPPORTED_TASKS = [
     "text2text-generation",
     "zero-shot-classification",
 ]
-
-# django event stream related stuff
-ASGI_APPLICATION = "feed.asgi.application"
-EVENTSTREAM_STORAGE_CLASS = "django_eventstream.storage.DjangoModelStorage"
-EVENTSTREAM_CHANNELMANAGER_CLASS = "feedapp.channelmanager.ChannelAuthManager"
 
 # whitenoise related stuff
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
