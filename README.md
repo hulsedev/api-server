@@ -16,6 +16,7 @@ python -m venv env
 source env/bin/activate
 pip install -r requirements.txt
 ```
+*Note that these instructions on db setups are the same as for getting started with the stream-server, if you already completed those, feel free to skip these.*
 
 You will then need to setup your local Postgres database:
 ```bash
