@@ -101,14 +101,14 @@ TEMPLATES = [
 WSGI_APPLICATION = "feed.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-# NOTE: automatically forwarded to postgresql in prod
-DB_NAME = os.environ.get("DB_NAME", "db.sqlite3")
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / DB_NAME,
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("DB_NAME", "hulse-api"),
+        "USER": os.environ.get("DB_USER", "postgres"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "postgres"),
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", 5432),
     }
 }
 

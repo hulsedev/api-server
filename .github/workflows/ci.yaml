@@ -18,6 +18,10 @@ jobs:
     env:
       CI: 1
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DEBUG: ${{ secrets.DEBUG }}
 
     steps:
       - name: Checkout the code
@@ -41,4 +45,6 @@ jobs:
       - name: Run tests
         shell: bash -l {0}
         run: |
+          bash scripts/start_docker_postgres.sh
+          sleep 5 # wait for postgres to start
           bash scripts/run-tests.sh
