@@ -181,7 +181,7 @@ def delete_cluster(request):
         )
 
     cluster = Cluster.objects.filter(id=request.data["cluster_id"]).first()
-    if request.user != cluster.admin:
+    if not cluster or request.user != cluster.admin:
         return Response(
             data={"error": "user does not have the right to delete cluster"},
             status=status.HTTP_403_FORBIDDEN,
@@ -209,7 +209,7 @@ def edit_cluster(request):
         )
 
     cluster = Cluster.objects.filter(id=request.data["cluster_id"]).first()
-    if request.user != cluster.admin:
+    if not cluster or request.user != cluster.admin:
         return Response(
             data={"error": "user does not have the rights to edit cluster"},
             status=status.HTTP_403_FORBIDDEN,
@@ -234,7 +234,7 @@ def leave_cluster(request):
 
     cluster = Cluster.objects.filter(id=request.data["cluster_id"]).first()
     # make sure not already part of this cluster
-    if cluster.deleted or request.user not in cluster.members.all():
+    if not cluster or cluster.deleted or request.user not in cluster.members.all():
         return Response(
             data={"error": "cluster was deleted or user not a part of it"},
             status=status.HTTP_403_FORBIDDEN,
@@ -258,7 +258,7 @@ def join_cluster(request):
 
     cluster = Cluster.objects.filter(id=request.data["cluster_id"]).first()
     # make sure not already part of this cluster
-    if cluster.deleted or request.user in cluster.members.all():
+    if not cluster or cluster.deleted or request.user in cluster.members.all():
         return Response(
             data={"error": "cluster was deleted or user already part of it"},
             status=status.HTTP_403_FORBIDDEN,
