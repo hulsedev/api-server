@@ -1,3 +1,3 @@
-export $(cat .dev.env | xargs)
+export $(cat .env | xargs)
 
 python manage.py createsuperuser

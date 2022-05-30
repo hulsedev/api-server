@@ -30,6 +30,7 @@ HULSE_LANDING_URL = os.environ.get("HULSE_LANDING_URL", "https://hulse.app/")
 HULSE_DASHBOARD_URL = os.environ.get(
     "HULSE_DASHBOARD_URL", "https://dashboard.hulse.app/"
 )
+HULSE_DESKTOP_URL = os.environ.get("HULSE_DESKTOP_URL", "http://localhost:4240/")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "true").lower() == "true"
@@ -40,8 +41,6 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    "channels",
-    "django_eventstream",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -78,7 +77,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_grip.GripMiddleware",
 ]
 
 
@@ -103,13 +101,14 @@ TEMPLATES = [
 WSGI_APPLICATION = "feed.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-# NOTE: automatically forwarded to postgresql in prod
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("DB_NAME", "hulse-api"),
+        "USER": os.environ.get("DB_USER", "postgres"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "postgres"),
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", 5432),
     }
 }
 
@@ -184,16 +183,11 @@ SUPPORTED_TASKS = [
     "zero-shot-classification",
 ]
 
-# django event stream related stuff
-ASGI_APPLICATION = "feed.asgi.application"
-EVENTSTREAM_STORAGE_CLASS = "django_eventstream.storage.DjangoModelStorage"
-EVENTSTREAM_CHANNELMANAGER_CLASS = "feedapp.channelmanager.ChannelAuthManager"
-
 # whitenoise related stuff
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # CSRF_TRUSTED_ORIGINS = [
-#    "localhost:8000",
+#    "http://localhost:8000",
 #    "https://hulse-api.herokuapp.com/",
 #    "https://hulse-api.herokuapp.com",
 # ]

@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "master"
+
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  ci-run:
+    name: Run CI
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    runs-on: "ubuntu-latest"
+
+    env:
+      CI: 1
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DEBUG: ${{ secrets.DEBUG }}
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+          cache: pip
+
+      - name: Lint
+        run: |
+          pip install black>=20.8b1
+          black --check .
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        shell: bash -l {0}
+        run: |
+          bash scripts/start-docker-postgres.sh
+          sleep 5 # wait for postgres to start
+          bash scripts/run-tests.sh
+
+      - name: Deploy api server to heroku
+        if: github.ref == 'refs/heads/master'
+        uses: nyakaz73/heroku-django-deploy@v0.81
+        with:
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_email_address: ${{ secrets.HEROKU_EMAIL }}
+          use_git: true
+          git_branch: master

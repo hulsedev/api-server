@@ -6,22 +6,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('feedapp', '0005_queryrecord'),
+        ("feedapp", "0005_queryrecord"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='report',
-            name='post',
+            model_name="report",
+            name="post",
         ),
         migrations.RemoveField(
-            model_name='report',
-            name='reported_by',
+            model_name="report",
+            name="reported_by",
         ),
         migrations.DeleteModel(
-            name='Post',
+            name="Post",
         ),
         migrations.DeleteModel(
-            name='Report',
+            name="Report",
         ),
     ]
