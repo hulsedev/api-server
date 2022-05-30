@@ -9,22 +9,50 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('feedapp', '0002_post_report'),
+        ("feedapp", "0002_post_report"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Cluster',
+            name="Cluster",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=50)),
-                ('description', models.CharField(max_length=200)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('date_updated', models.DateTimeField(auto_now=True)),
-                ('date_deleted', models.DateTimeField(blank=True, null=True)),
-                ('admin', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('deleted_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='mod_who_deleted', to=settings.AUTH_USER_MODEL)),
-                ('members', models.ManyToManyField(related_name='clusters', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                ("description", models.CharField(max_length=200)),
+                ("date_created", models.DateTimeField(auto_now_add=True)),
+                ("date_updated", models.DateTimeField(auto_now=True)),
+                ("date_deleted", models.DateTimeField(blank=True, null=True)),
+                (
+                    "admin",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "deleted_by",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="mod_who_deleted",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "members",
+                    models.ManyToManyField(
+                        related_name="clusters", to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
     ]

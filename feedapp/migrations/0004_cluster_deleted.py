@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('feedapp', '0003_cluster'),
+        ("feedapp", "0003_cluster"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='cluster',
-            name='deleted',
+            model_name="cluster",
+            name="deleted",
             field=models.BooleanField(default=False),
         ),
     ]

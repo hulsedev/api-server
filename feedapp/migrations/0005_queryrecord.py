@@ -9,22 +9,50 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('feedapp', '0004_cluster_deleted'),
+        ("feedapp", "0004_cluster_deleted"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='QueryRecord',
+            name="QueryRecord",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('task', models.CharField(max_length=50)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('date_updated', models.DateTimeField(auto_now=True)),
-                ('date_fullfilled', models.DateTimeField(blank=True, null=True)),
-                ('status', models.CharField(max_length=50)),
-                ('cluster', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='feedapp.cluster')),
-                ('consumer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posted_queries', to=settings.AUTH_USER_MODEL)),
-                ('producer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='served_queries', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("task", models.CharField(max_length=50)),
+                ("date_created", models.DateTimeField(auto_now_add=True)),
+                ("date_updated", models.DateTimeField(auto_now=True)),
+                ("date_fullfilled", models.DateTimeField(blank=True, null=True)),
+                ("status", models.CharField(max_length=50)),
+                (
+                    "cluster",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="feedapp.cluster",
+                    ),
+                ),
+                (
+                    "consumer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="posted_queries",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "producer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="served_queries",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]
