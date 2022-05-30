@@ -57,3 +57,5 @@ jobs:
           heroku_email_address: ${{ secrets.HEROKU_EMAIL }}
           use_git: true
           git_branch: master
+        run: |
+          git pull heroku master
