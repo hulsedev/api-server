@@ -48,6 +48,10 @@ jobs:
           sleep 5 # wait for postgres to start
           bash scripts/run-tests.sh
 
+      - name: Pull heroku master
+        if: github.ref == 'refs/heads/master'
+        run: git pull heroku master
+
       - name: Deploy api server to heroku
         if: github.ref == 'refs/heads/master'
         uses: nyakaz73/heroku-django-deploy@v0.81
@@ -57,5 +61,3 @@ jobs:
           heroku_email_address: ${{ secrets.HEROKU_EMAIL }}
           use_git: true
           git_branch: master
-        run: |
-          git pull heroku master
