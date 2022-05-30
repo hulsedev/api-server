@@ -17,9 +17,6 @@ fi
 
 source "${API_ENV_DIR}/bin/activate"
 
-export MOCKUSERNAME="mockuser"
-export MOCKEMAIL="mockemail@gmail.com"
-
 python $API_PROJECT_DIR/manage.py makemigrations && \
 python $API_PROJECT_DIR/manage.py migrate
 python $API_PROJECT_DIR/manage.py createsuperuser --noinput --username=$MOCKUSERNAME --email=$MOCKEMAIL
