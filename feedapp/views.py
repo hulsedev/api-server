@@ -81,6 +81,8 @@ def callback(request):
             + urlencode(
                 {
                     "authToken": token.key,
+                    "email": request.user.email,
+                    "username": request.user.username,
                 },
                 quote_via=quote_plus,
             ),
