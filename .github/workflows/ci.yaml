@@ -45,6 +45,6 @@ jobs:
       - name: Run tests
         shell: bash -l {0}
         run: |
-          bash scripts/start_docker_postgres.sh
+          bash scripts/start-docker-postgres.sh
           sleep 5 # wait for postgres to start
           bash scripts/run-tests.sh
