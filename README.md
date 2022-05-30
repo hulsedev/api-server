@@ -1,52 +1,37 @@
-This application is based on [this Django authentication tutorial](https://auth0.com/blog/django-authentication/) where you learn how to create a public feed application, add authentication, and add moderator permissions.
+# Hulse API Server
+Server handling authentication and cluster management for Hulse users.
 
-![Django public feed app](https://cdn.auth0.com/blog/django-authentication/django-public-feed.png)
+## Getting Started
 
-## Running the application
-
-First, clone the application:
+Clone the application:
 
 ```bash
-git clone git@github.com:auth0-blog/django-feed-auth0.git
-cd django-feed-auth0
+git clone git@github.com:hulsedev/api-server.git
+cd api-server
 ```
 
-Next, install the dependencies:
-
+Next, create a virtual env & install dependencies:
 ```bash
 python -m venv env
 source env/bin/activate
 pip install -r requirements.txt
 ```
 
-Then, you need to update your `settings.py` file with your own Auth0 values. You can [sign up for a free Auth0 account here](https://auth0.com/signup) if you don't have one already.
+## Running locally
 
-You can find the location of those values in your Auth0 dashboard. For more details, please see the ["Adding Authentication" section of the tutorial](https://auth0.com/blog/django-authentication#adding-authentication).
-
-
-Migrate the application:
-
-```shell script
-cd feed
-python manage.py migrate
-```
-
-Create a superuser:
-
-```shell script
-python manage.py createsuperuser
-```
-
-Finally, run the application:
-
+You can directly run the app using the following script:
 ```bash
-python manage.py runserver
+bash scripts/create-superuser.sh
+bash scripts/run-debug-server.sh
 ```
 
-Running the web process:
-```Procfile
-web: gunicorn feed.wsgi
-web: daphne feed.asgi:application
-web: daphne feed.asgi:application --port $PORT --bind 0.0.0.0 -v2
+Note that you'll need to obtain the environment variables required to connect to Auth0 and then place them into a `.env` file.
 
-```
+## Deployment
+
+The app is currently deployed on Heroku using free dynos (free credits). You can find the Heroku deployment instructions in the `Procfile`.
+
+## References
+
+Checkout the following sources for more info:
+- [Integration of Auth0 with Django](https://auth0.com/blog/django-authentication/) 
